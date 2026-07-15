@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calendario de Visitas 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Roboto', sans-serif; background: #f0f4f8; }
+  .no-print { text-align: center; padding: 16px; background: #1e3a5f; }
+  .no-print button {
+    background: #fff; color: #1e3a5f; border: none;
+    padding: 10px 24px; border-radius: 6px; font-size: 15px;
+    cursor: pointer; font-weight: 700; margin: 0 8px;
+  }
+  .no-print button:hover { background: #e2e8f0; }
+  .save-msg { color: #90ee90; font-size: 13px; margin-top: 6px; min-height: 18px; }
+  .month-page {
+    width: 297mm; min-height: 210mm;
+    margin: 24px auto; background: #fff;
+    border-radius: 8px; box-shadow: 0 2px 12px rgba(0,0,0,0.12);
+    overflow: hidden; page-break-after: always;
+  }
+  .banner {
+    background: linear-gradient(135deg, #1e3a5f 0%, #2d6a9f 100%);
+    color: #fff; text-align: center; padding: 18px 12px 10px;
+  }
+  .banner h1 { font-size: 22px; letter-spacing: 2px; }
+  .banner h2 { font-size: 14px; font-weight: 300; opacity: 0.85; }
+  .calendar { width: 100%; border-collapse: collapse; }
+  .calendar th {
+    background: #2d6a9f; color: #fff;
+    padding: 6px 4px; font-size: 12px; text-align: center;
+    border: 1px solid #1e3a5f;
+  }
+  .calendar td {
+    border: 1px solid #c8d8e8; vertical-align: top;
+    width: 14.28%; min-height: 28mm; padding: 4px;
+  }
+  .daynum {
+    font-weight: 700; font-size: 13px; color: #1e3a5f;
+    margin-bottom: 4px;
+  }
+  .day-empty { background: #f8fafc; }
+  .day-sunday .daynum { color: #c0392b; }
+  .day-saturday .daynum { color: #2980b9; }
+  textarea.note {
+    width: 100%; border: none; resize: none;
+    font-size: 10px; font-family: 'Roboto', sans-serif;
+    color: #2c3e50; background: transparent; outline: none;
+    min-height: 60px; line-height: 1.4;
+  }
+  @media print {
+    .no-print { display: none; }
+    .month-page {
+      box-shadow: none; margin: 0; border-radius: 0;
+      width: 100%; page-break-after: always;
+    }
+    @page { size: A4 landscape; margin: 8mm; }
+  }
+</style>
+</head>
+<body>
+<div class="no-print">
+  <button onclick="window.print()">Imprimir / Guardar PDF</button>
+  <div class="save-msg" id="saveMsg">Los datos se guardan automaticamente en este navegador.</div>
+</div>
+<main id="main-content"></main>
+<script>
+const MONTHS = [
+  { name: 'JULIO', year: 2026, month: 6, days: 31 },
+  { name: 'AGOSTO', year: 2026, month: 7, days: 31 },
+  { name: 'SEPTIEMBRE', year: 2026, month: 8, days: 30 },
+  { name: 'OCTUBRE', year: 2026, month: 9, days: 31 },
+  { name: 'NOVIEMBRE', year: 2026, month: 10, days: 30 },
+  { name: 'DICIEMBRE', year: 2026, month: 11, days: 31 },
+];
+const DAY_NAMES = ['DOM','LUN','MAR','MIE','JUE','VIE','SAB'];
+const DAY_CLASSES = ['day-sunday','','','','','','day-saturday'];
+
+function buildCalendar() {
+  const main = document.getElementById('main-content');
+  MONTHS.forEach(m => {
+    const firstDay = new Date(m.year, m.month, 1).getDay();
+    const page = document.createElement('div');
+    page.className = 'month-page';
+    page.innerHTML = `
+      <div class="banner">
+        <h1>CALENDARIO DE VISITAS</h1>
+        <h2>${m.name} ${m.year}</h2>
+      </div>
+      <table class="calendar">
+        <thead><tr>${DAY_NAMES.map(d=>`<th>${d}</th>`).join('')}</tr></thead>
+        <tbody id="tbody-${m.month}"></tbody>
+      </table>`;
+    main.appendChild(page);
+    const tbody = page.querySelector(`#tbody-${m.month}`);
+    let day = 1;
+    for (let w = 0; w < 6; w++) {
+      if (day > m.days) break;
+      const tr = document.createElement('tr');
+      for (let d = 0; d < 7; d++) {
+        const td = document.createElement('td');
+        const pos = w * 7 + d;
+        if (pos < firstDay || day > m.days) {
+          td.className = 'day-empty';
+        } else {
+          const dow = new Date(m.year, m.month, day).getDay();
+          td.className = DAY_CLASSES[dow];
+          const key = `nota-${m.year}-${m.month}-${day}`;
+          td.innerHTML = `<div class="daynum">${day}</div>`;
+          const ta = document.createElement('textarea');
+          ta.className = 'note';
+          ta.placeholder = 'Escribe aqui...';
+          ta.dataset.key = key;
+          ta.value = localStorage.getItem(key) || '';
+          ta.addEventListener('input', () => {
+            localStorage.setItem(key, ta.value);
+            showSaved();
+          });
+          td.appendChild(ta);
+          day++;
+        }
+        tr.appendChild(td);
+      }
+      tbody.appendChild(tr);
+    }
+  });
+}
+
+let saveTimer;
+function showSaved() {
+  clearTimeout(saveTimer);
+  const msg = document.getElementById('saveMsg');
+  msg.textContent = 'Guardado automaticamente.';
+  saveTimer = setTimeout(() => {
+    msg.textContent = 'Los datos se guardan automaticamente en este navegador.';
+  }, 2000);
+}
+
+buildCalendar();
+</script>
+</body>
+</html>

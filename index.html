@@ -8,252 +8,102 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Poppins:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
   <style>
-    :root {
-      --orange: #F26522;
-      --orange-deep: #D6470E;
-      --blue: #1B4B72;
-      --black: #17110D;
-      --paper: #FFFFFF;
-      --line: #E4DCD0;
-      --bg: #F0EBE3;
-    }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: 'Poppins', sans-serif; background: var(--bg); }
-
-    /* ── TOOLBAR ── */
-    #toolbar {
-      position: sticky; top: 0; z-index: 100;
-      background: #17110D;
-      display: flex; align-items: center; gap: 16px;
-      padding: 10px 24px;
-    }
-    #toolbar button.print-btn {
-      background: var(--orange); color: #fff;
-      border: none; border-radius: 6px;
-      padding: 8px 20px; font-family: 'Poppins', sans-serif;
-      font-weight: 700; font-size: 14px; cursor: pointer;
-    }
-    #toolbar button.print-btn:hover { background: var(--orange-deep); }
-    #toolbar .hint {
-      color: #ccc; font-size: 13px;
-    }
-
-    /* ── CALENDAR PAGE ── */
-    .cal-page {
-      width: 100%; max-width: 1080px;
-      margin: 32px auto; background: var(--paper);
-      border-radius: 12px; overflow: hidden;
-      box-shadow: 0 4px 24px rgba(0,0,0,0.10);
-      page-break-after: always;
-    }
-
-    /* ── BANNER ── */
-    .banner {
-      background: linear-gradient(135deg, #17110D 0%, #D6470E 55%, #F9D9C8 100%);
-      padding: 40px 48px 32px;
-      color: #fff;
-    }
-    .banner .label {
-      font-family: 'DM Mono', monospace;
-      font-size: 11px; letter-spacing: 4px;
-      text-transform: uppercase; opacity: 0.75;
-      margin-bottom: 8px;
-    }
-    .banner h1 {
-      font-family: 'Archivo Black', sans-serif;
-      font-size: 56px; line-height: 1;
-      display: flex; align-items: baseline; gap: 16px;
-    }
-    .banner h1 span { font-size: 32px; opacity: 0.7; }
-
-    /* ── GRID HEADER ── */
-    .grid-head {
-      display: grid; grid-template-columns: repeat(7, 1fr);
-      background: #17110D;
-    }
-    .grid-head div {
-      text-align: center; padding: 10px 4px;
-      font-family: 'DM Mono', monospace;
-      font-size: 10px; letter-spacing: 2px;
-      color: #fff; text-transform: uppercase;
-    }
-
-    /* ── GRID BODY ── */
-    .grid-body {
-      display: grid; grid-template-columns: repeat(7, 1fr);
-    }
-    .day-cell {
-      min-height: 110px;
-      border-right: 1px solid var(--line);
-      border-bottom: 1px solid var(--line);
-      padding: 8px 8px 6px;
-      display: flex; flex-direction: column;
-      position: relative;
-    }
-    .day-cell:nth-child(7n) { border-right: none; }
-    .day-cell.empty { background: #FAF7F4; }
-    .day-num {
-      font-family: 'DM Mono', monospace;
-      font-size: 12px; color: var(--orange);
-      font-weight: 500; margin-bottom: 4px;
-      flex-shrink: 0;
-    }
-
-    /* ── TWO-FIELD ENTRY ── */
-    .entry-title {
-      color: var(--orange);
-      font-weight: 700;
-      font-size: 11.5px;
-      line-height: 1.3;
-      font-family: 'Poppins', sans-serif;
-      outline: none;
-      border: none;
-      width: 100%;
-      background: transparent;
-      resize: none;
-      min-height: 22px;
-    }
-    .entry-title:empty:before {
-      content: attr(data-placeholder);
-      color: #CCBFB0;
-      font-weight: 400;
-      pointer-events: none;
-    }
-    .entry-info {
-      color: var(--blue);
-      font-size: 10.5px;
-      line-height: 1.3;
-      font-family: 'Poppins', sans-serif;
-      outline: none;
-      border: none;
-      width: 100%;
-      background: transparent;
-      resize: none;
-      min-height: 20px;
-      margin-top: 2px;
-    }
-    .entry-info:empty:before {
-      content: attr(data-placeholder);
-      color: #CCBFB0;
-      pointer-events: none;
-    }
-
-    /* ── PRINT ── */
+    :root { --orange:#F26522; --orange-deep:#D6470E; --blue:#1B4B72; --black:#17110D; --paper:#FFFFFF; --line:#E4DCD0; --bg:#F0EBE3; }
+    * { box-sizing:border-box; margin:0; padding:0; }
+    body { font-family:'Poppins',sans-serif; background:var(--bg); }
+    #toolbar { position:sticky; top:0; z-index:100; background:#17110D; display:flex; align-items:center; gap:16px; padding:10px 24px; }
+    #toolbar button.print-btn { background:var(--orange); color:#fff; border:none; border-radius:6px; padding:8px 20px; font-family:'Poppins',sans-serif; font-weight:700; font-size:14px; cursor:pointer; }
+    #toolbar button.print-btn:hover { background:var(--orange-deep); }
+    #toolbar .hint { color:#ccc; font-size:13px; }
+    .cal-page { width:100%; max-width:1080px; margin:32px auto; background:var(--paper); border-radius:12px; overflow:hidden; box-shadow:0 4px 24px rgba(0,0,0,0.10); page-break-after:always; }
+    .banner { background:linear-gradient(135deg,#17110D 0%,#D6470E 55%,#F9D9C8 100%); padding:40px 48px 32px; color:#fff; }
+    .banner .label { font-family:'DM Mono',monospace; font-size:11px; letter-spacing:4px; text-transform:uppercase; opacity:0.75; margin-bottom:8px; }
+    .banner h1 { font-family:'Archivo Black',sans-serif; font-size:56px; line-height:1; display:flex; align-items:baseline; gap:16px; }
+    .banner h1 span { font-size:32px; opacity:0.7; }
+    .grid-head { display:grid; grid-template-columns:repeat(7,1fr); background:#17110D; }
+    .grid-head div { text-align:center; padding:10px 4px; font-family:'DM Mono',monospace; font-size:10px; letter-spacing:2px; color:#fff; text-transform:uppercase; }
+    .grid-body { display:grid; grid-template-columns:repeat(7,1fr); }
+    .day-cell { min-height:155px; border-right:1px solid var(--line); border-bottom:1px solid var(--line); padding:6px 6px 4px; display:flex; flex-direction:column; gap:2px; }
+    .day-cell:nth-child(7n) { border-right:none; }
+    .day-cell.empty { background:#FAF7F4; }
+    .day-num { font-family:'DM Mono',monospace; font-size:11px; color:var(--orange); font-weight:500; margin-bottom:2px; flex-shrink:0; }
+    .cita-block { display:flex; flex-direction:column; border-top:1px dashed #EDE8E0; padding-top:2px; flex-shrink:0; }
+    .cita-block:first-of-type { border-top:none; padding-top:0; }
+    .cita-num { font-family:'DM Mono',monospace; font-size:8px; color:#C4B4A4; line-height:1; margin-bottom:1px; }
+    .cita-titulo { color:var(--orange); font-weight:700; font-size:10px; line-height:1.2; font-family:'Poppins',sans-serif; outline:none; min-height:13px; }
+    .cita-titulo:empty:before { content:attr(data-ph); color:#D4C8BC; font-weight:400; pointer-events:none; }
+    .cita-info { color:var(--blue); font-size:9px; line-height:1.2; font-family:'Poppins',sans-serif; outline:none; min-height:11px; }
+    .cita-info:empty:before { content:attr(data-ph); color:#D4C8BC; pointer-events:none; }
+    .add-cita-btn { display:none; margin-top:3px; background:none; border:1px dashed #D4C8BC; border-radius:3px; color:#B8A898; font-size:9px; font-family:'Poppins',sans-serif; cursor:pointer; padding:2px 4px; text-align:center; width:100%; }
+    .add-cita-btn:hover { border-color:var(--orange); color:var(--orange); }
+    .day-cell:hover .add-cita-btn { display:block; }
     @media print {
-      #toolbar { display: none !important; }
-      body { background: #fff; }
-      .cal-page {
-        box-shadow: none; border-radius: 0;
-        margin: 0; max-width: 100%;
-        page-break-after: always;
-      }
+      #toolbar { display:none !important; }
+      body { background:#fff; }
+      .cal-page { box-shadow:none; border-radius:0; margin:0; max-width:100%; page-break-after:always; }
+      .add-cita-btn { display:none !important; }
     }
   </style>
 </head>
 <body>
-
 <div id="toolbar">
   <button class="print-btn" onclick="window.print()">&#128438; Imprimir / Guardar PDF</button>
-  <span class="hint">Haz clic en cualquier celda para escribir o editar una visita</span>
+  <span class="hint">Cada dia tiene 3 bloques de cita (naranja = visita, azul = hora/lugar). Pasa el cursor y usa + para agregar mas.</span>
 </div>
-
 <script>
-const MONTHS = [
-  { name: 'JULIO',      year: 2026, month: 6,  days: 31 },
-  { name: 'AGOSTO',     year: 2026, month: 7,  days: 31 },
-  { name: 'SEPTIEMBRE', year: 2026, month: 8,  days: 30 },
-  { name: 'OCTUBRE',    year: 2026, month: 9,  days: 31 },
-  { name: 'NOVIEMBRE',  year: 2026, month: 10, days: 30 },
-  { name: 'DICIEMBRE',  year: 2026, month: 11, days: 31 },
-];
-
-const DAYS = ['DOMINGO','LUNES','MARTES','MI\u00C9RCOLES','JUEVES','VIERNES','S\u00C1BADO'];
-
-function save(key, val) { try { localStorage.setItem(key, val); } catch(e){} }
-function load(key) { try { return localStorage.getItem(key) || ''; } catch(e){ return ''; } }
-
-function makeKey(month, day, field) {
-  return 'cal2026_' + month + '_' + day + '_' + field;
+const MONTHS=[{name:'JULIO',year:2026,month:6,days:31},{name:'AGOSTO',year:2026,month:7,days:31},{name:'SEPTIEMBRE',year:2026,month:8,days:30},{name:'OCTUBRE',year:2026,month:9,days:31},{name:'NOVIEMBRE',year:2026,month:10,days:30},{name:'DICIEMBRE',year:2026,month:11,days:31}];
+const DAYS=['DOMINGO','LUNES','MARTES','MI\u00C9RCOLES','JUEVES','VIERNES','S\u00C1BADO'];
+const DEF=3;
+function sv(k,v){try{localStorage.setItem(k,v);}catch(e){}}
+function ld(k){try{return localStorage.getItem(k)||'';}catch(e){return '';}}
+function svN(k,n){sv(k+'_n',n);}
+function ldN(k){try{return parseInt(localStorage.getItem(k+'_n')||DEF);}catch(e){return DEF;}}
+function mk(m,d,c,f){return 'cv26_'+m+'_'+d+'_c'+c+'_'+f;}
+function mkCell(m,d){return 'cv26_'+m+'_'+d;}
+function makeCita(m,d,ci){
+  const b=document.createElement('div');b.className='cita-block';
+  const n=document.createElement('div');n.className='cita-num';n.textContent=ci+'.';b.appendChild(n);
+  const t=document.createElement('div');t.className='cita-titulo';t.contentEditable='true';t.setAttribute('data-ph','Visita / Actividad');t.setAttribute('spellcheck','false');
+  const kt=mk(m,d,ci,'t');t.textContent=ld(kt);t.addEventListener('input',()=>sv(kt,t.textContent));b.appendChild(t);
+  const i=document.createElement('div');i.className='cita-info';i.contentEditable='true';i.setAttribute('data-ph','Hora | Direcci\u00F3n');i.setAttribute('spellcheck','false');
+  const ki=mk(m,d,ci,'i');i.textContent=ld(ki);i.addEventListener('input',()=>sv(ki,i.textContent));b.appendChild(i);
+  return b;
 }
-
-function buildMonth(cfg) {
-  const firstDay = new Date(cfg.year, cfg.month, 1).getDay();
-  const page = document.createElement('div');
-  page.className = 'cal-page';
-
-  // Banner
-  const banner = document.createElement('div');
-  banner.className = 'banner';
-  banner.innerHTML = '<div class="label">Calendario de Visitas</div><h1>' + cfg.name + ' <span>' + cfg.year + '</span></h1>';
-  page.appendChild(banner);
-
-  // Grid header
-  const head = document.createElement('div');
-  head.className = 'grid-head';
-  DAYS.forEach(d => { const div = document.createElement('div'); div.textContent = d; head.appendChild(div); });
-  page.appendChild(head);
-
-  // Grid body
-  const body = document.createElement('div');
-  body.className = 'grid-body';
-
-  // Empty cells before first day
-  for (let i = 0; i < firstDay; i++) {
-    const empty = document.createElement('div');
-    empty.className = 'day-cell empty';
-    body.appendChild(empty);
-  }
-
-  // Day cells
-  for (let d = 1; d <= cfg.days; d++) {
-    const cell = document.createElement('div');
-    cell.className = 'day-cell';
-
-    const num = document.createElement('div');
-    num.className = 'day-num';
-    num.textContent = d;
-    cell.appendChild(num);
-
-    // Title field (orange bold)
-    const titleEl = document.createElement('div');
-    titleEl.className = 'entry-title';
-    titleEl.contentEditable = 'true';
-    titleEl.setAttribute('data-placeholder', 'Visita / Actividad');
-    titleEl.setAttribute('spellcheck', 'false');
-    const keyTitle = makeKey(cfg.month, d, 'title');
-    titleEl.textContent = load(keyTitle);
-    titleEl.addEventListener('input', () => save(keyTitle, titleEl.textContent));
-    cell.appendChild(titleEl);
-
-    // Info field (blue)
-    const infoEl = document.createElement('div');
-    infoEl.className = 'entry-info';
-    infoEl.contentEditable = 'true';
-    infoEl.setAttribute('data-placeholder', 'Hora | Direcci\u00F3n');
-    infoEl.setAttribute('spellcheck', 'false');
-    const keyInfo = makeKey(cfg.month, d, 'info');
-    infoEl.textContent = load(keyInfo);
-    infoEl.addEventListener('input', () => save(keyInfo, infoEl.textContent));
-    cell.appendChild(infoEl);
-
+function buildMonth(cfg){
+  const first=new Date(cfg.year,cfg.month,1).getDay();
+  const page=document.createElement('div');page.className='cal-page';
+  const ban=document.createElement('div');ban.className='banner';
+  ban.innerHTML='<div class="label">Calendario de Visitas</div><h1>'+cfg.name+' <span>'+cfg.year+'</span></h1>';
+  page.appendChild(ban);
+  const hd=document.createElement('div');hd.className='grid-head';
+  DAYS.forEach(d=>{const div=document.createElement('div');div.textContent=d;hd.appendChild(div);});
+  page.appendChild(hd);
+  const body=document.createElement('div');body.className='grid-body';
+  for(let i=0;i<first;i++){const e=document.createElement('div');e.className='day-cell empty';body.appendChild(e);}
+  for(let d=1;d<=cfg.days;d++){
+    const cell=document.createElement('div');cell.className='day-cell';
+    const dn=document.createElement('div');dn.className='day-num';dn.textContent=d;cell.appendChild(dn);
+    const ck=mkCell(cfg.month,d);
+    const cnt=ldN(ck);
+    for(let c=1;c<=cnt;c++){cell.appendChild(makeCita(cfg.month,d,c));}
+    const btn=document.createElement('button');btn.className='add-cita-btn';btn.textContent='+ Agregar cita';
+    btn.addEventListener('click',()=>{
+      const cur=cell.querySelectorAll('.cita-block').length;
+      const nxt=cur+1;
+      const nb=makeCita(cfg.month,d,nxt);
+      cell.insertBefore(nb,btn);
+      svN(ck,nxt);
+      nb.querySelector('.cita-titulo').focus();
+    });
+    cell.appendChild(btn);
     body.appendChild(cell);
   }
-
-  // Trailing empty cells to complete last row
-  const totalCells = firstDay + cfg.days;
-  const remainder = totalCells % 7;
-  if (remainder !== 0) {
-    for (let i = 0; i < (7 - remainder); i++) {
-      const empty = document.createElement('div');
-      empty.className = 'day-cell empty';
-      body.appendChild(empty);
-    }
-  }
-
+  const tot=first+cfg.days;
+  const rem=tot%7;
+  if(rem!==0){for(let i=0;i<(7-rem);i++){const e=document.createElement('div');e.className='day-cell empty';body.appendChild(e);}}
   page.appendChild(body);
   document.body.appendChild(page);
 }
-
 MONTHS.forEach(buildMonth);
 </script>
 </body>

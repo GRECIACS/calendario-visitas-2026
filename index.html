@@ -3,163 +3,336 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Calendario de Visitas 2026</title>
+<title>Calendario de Visitas &mdash; Julio a Diciembre 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Poppins:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: 'Consolas', monospace; background: #f5f0eb; }
-  .no-print { text-align: center; padding: 16px; background: #c0392b; }
-  .no-print button {
-    background: #fff; color: #c0392b; border: none;
-    padding: 10px 24px; border-radius: 6px; font-size: 15px;
-    cursor: pointer; font-weight: 700; margin: 0 8px;
-  }
-  .no-print button:hover { background: #fde8d8; }
-  .save-msg { color: #ffe0b2; font-size: 13px; margin-top: 6px; min-height: 18px; }
-  .toolbar {
-    display: flex; align-items: center; justify-content: center;
-    flex-wrap: wrap; gap: 8px; padding: 10px 16px;
-    background: #fff3e0; border-bottom: 2px solid #e65100;
-  }
-  .toolbar label { font-size: 13px; font-weight: bold; color: #b71c1c; font-family: Consolas, monospace; }
-  .toolbar button {
-    padding: 5px 14px; border-radius: 5px; border: 1.5px solid #e65100;
-    background: #fff; color: #c0392b; font-size: 14px;
-    cursor: pointer; font-family: Consolas, monospace; font-weight: bold;
-  }
-  .toolbar button:hover { background: #fde8d8; }
-  .toolbar input[type=color] {
-    width: 36px; height: 30px; border: 1.5px solid #e65100;
-    border-radius: 5px; cursor: pointer; padding: 2px;
-  }
-  .month-page {
-    width: 100%; max-width: 1100px; margin: 0 auto;
-    padding: 8px; page-break-after: always;
-  }
-  .cal-header {
-    background: linear-gradient(135deg, #e65100, #ff8f00);
-    color: white; text-align: center; padding: 18px 8px 10px;
-    border-radius: 6px 6px 0 0;
-  }
-  .cal-header h1 { font-size: 2em; letter-spacing: 3px; font-family: Consolas, monospace; }
-  .cal-header h2 { font-size: 1.1em; letter-spacing: 2px; margin-top: 4px; font-family: Consolas, monospace; }
-  .cal-grid { width: 100%; border-collapse: collapse; }
-  .cal-grid th {
-    background: #bf360c; color: white; text-align: center;
-    padding: 8px 0; font-size: 0.95em; font-family: Consolas, monospace;
-    border: 1px solid #e65100;
-  }
-  .cal-grid td {
-    border: 1px solid #ffccbc; vertical-align: top;
-    width: 14.28%; height: 110px; padding: 4px 6px;
-    background: #fff8f0;
-  }
-  .cal-grid td.empty { background: #fff3e0; }
-  .day-num {
-    font-weight: bold; font-size: 1em; color: #bf360c;
-    display: block; margin-bottom: 4px; font-family: Consolas, monospace;
-  }
-  .day-num.sunday { color: #c0392b; }
-  .day-content {
-    min-height: 75px; width: 100%; outline: none;
-    font-family: Consolas, monospace; font-size: 12.5px;
-    color: #333; line-height: 1.5; white-space: pre-wrap; word-break: break-word;
-  }
-  .day-content:empty:before {
-    content: 'Escribe aqui...';
-    color: #bbb; pointer-events: none; display: block;
-  }
-  @media print {
-    .no-print, .toolbar { display: none !important; }
-    body { background: white; }
-    .month-page { page-break-after: always; padding: 0; }
-    .cal-grid td { height: 100px; }
-  }
+:root {
+  --orange: #F26522;
+  --orange-deep: #D6470E;
+  --red-deep: #A6191A;
+  --black: #17110D;
+  --paper: #FFFFFF;
+  --line: #E4DCD0;
+  --loc-color: #D6470E;
+  --time-color: #1B4B72;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Poppins', sans-serif; background: #F0EBE3; }
+
+/* ===== NO PRINT BAR ===== */
+.no-print {
+  background: #17110D;
+  color: #fff;
+  text-align: center;
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.no-print button {
+  background: var(--orange);
+  color: #fff;
+  border: none;
+  padding: 8px 22px;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  font-weight: 700;
+  font-family: 'Poppins', sans-serif;
+  letter-spacing: 0.03em;
+}
+.no-print button:hover { background: var(--orange-deep); }
+.hint { color: #FFD9C2; font-size: 12px; }
+
+/* ===== TOOLBAR ===== */
+.toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 8px 16px;
+  background: #fff8f4;
+  border-bottom: 2px solid var(--orange);
+}
+.toolbar label { font-size: 12px; font-weight: 600; color: var(--red-deep); font-family: 'Poppins', sans-serif; }
+.toolbar button {
+  padding: 4px 12px;
+  border-radius: 4px;
+  border: 1.5px solid var(--orange-deep);
+  background: #fff;
+  color: var(--orange-deep);
+  font-size: 14px;
+  cursor: pointer;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
+  transition: background 0.15s;
+}
+.toolbar button:hover { background: #FFE5D4; }
+.toolbar input[type=color] {
+  width: 32px; height: 28px;
+  border: 1.5px solid var(--orange-deep);
+  border-radius: 4px;
+  cursor: pointer;
+  padding: 1px;
+}
+
+/* ===== SHEET ===== */
+.sheet-wrap {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 20px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+/* ===== MONTH PAGE ===== */
+.month-page {
+  background: var(--paper);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 24px rgba(23,17,13,0.13);
+  page-break-after: always;
+}
+
+/* ===== BANNER ===== */
+.banner {
+  position: relative;
+  background-image: var(--banner-img);
+  background-size: cover;
+  background-position: center 30%;
+  height: 180px;
+  display: flex;
+  align-items: flex-end;
+}
+.banner-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(100deg,
+    rgba(23,17,13,0.90) 0%,
+    rgba(214,71,14,0.82) 35%,
+    rgba(242,101,34,0.25) 56%,
+    rgba(242,101,34,0.0) 70%
+  );
+}
+.banner-title {
+  position: relative;
+  padding: 20px 28px;
+  color: white;
+}
+.eyebrow {
+  display: inline-block;
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #FFD9C2;
+  margin-bottom: 4px;
+}
+.banner-title h1 {
+  font-family: 'Archivo Black', sans-serif;
+  font-weight: 400;
+  font-size: 38px;
+  line-height: 1;
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+}
+.banner-title .year {
+  color: #FFD9C2;
+  font-size: 24px;
+  vertical-align: middle;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
+}
+.divider {
+  height: 6px;
+  background: linear-gradient(90deg, var(--orange-deep), var(--orange) 60%, var(--orange) 100%);
+}
+
+/* ===== CALENDAR TABLE ===== */
+.calendar {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+.calendar th {
+  background: #17110D;
+  color: #FFD9C2;
+  text-align: center;
+  padding: 7px 0;
+  font-size: 11px;
+  font-family: 'DM Mono', monospace;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border-right: 1px solid #2a1e18;
+}
+.calendar th:last-child { border-right: none; }
+.calendar td {
+  border: 1px solid var(--line);
+  vertical-align: top;
+  width: 14.28%;
+  min-height: 115px;
+  height: 115px;
+  padding: 6px 7px 4px;
+  background: #FFFAF7;
+  position: relative;
+}
+.calendar td.empty {
+  background: #F5EFE9;
+  opacity: 0.6;
+}
+.daynum {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--orange-deep);
+  display: block;
+  margin-bottom: 3px;
+  line-height: 1;
+}
+.daynum.sun { color: var(--red-deep); }
+.note {
+  min-height: 80px;
+  width: 100%;
+  outline: none;
+  font-family: 'Poppins', sans-serif;
+  font-size: 11px;
+  color: #17110D;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+.note:empty:before {
+  content: '';
+  color: #ccc;
+  pointer-events: none;
+  display: block;
+}
+
+/* entry spans inside note */
+.entry { display: block; margin-bottom: 4px; }
+.entry-loc {
+  display: block;
+  font-weight: 700;
+  font-size: 10.5px;
+  color: var(--loc-color);
+  text-transform: uppercase;
+  line-height: 1.3;
+  outline: none;
+}
+.entry-time {
+  display: block;
+  font-size: 10px;
+  color: var(--time-color);
+  font-weight: 600;
+  outline: none;
+}
+
+@media print {
+  .no-print, .toolbar { display: none !important; }
+  body { background: white; }
+  .sheet-wrap { padding: 0; gap: 0; }
+  .month-page { box-shadow: none; border-radius: 0; page-break-after: always; }
+  .calendar td { height: 105px; }
+}
 </style>
 </head>
 <body>
 
 <div class="no-print">
   <button onclick="window.print()">Imprimir / Guardar PDF</button>
-  <div class="save-msg">Los datos se guardan automaticamente en este navegador.</div>
+  <span class="hint">Haz clic en cualquier celda para escribir o editar una visita</span>
 </div>
 
 <div class="toolbar" id="toolbar">
-  <label>Formato de texto:</label>
+  <label>Formato:</label>
   <button onclick="fmt('bold')" title="Negrita"><b>N</b></button>
   <button onclick="fmt('italic')" title="Cursiva"><i>I</i></button>
   <button onclick="fmt('underline')" title="Subrayado"><u>S</u></button>
-  <label>Color de letra:</label>
-  <input type="color" id="colorPicker" value="#000000" title="Color de texto">
-  <button onclick="applyColor()" style="font-size:13px;">Aplicar Color</button>
-  <button onclick="fmt('removeFormat')" style="font-size:12px; color:#555;">Quitar formato</button>
+  <label>Color:</label>
+  <input type="color" id="colorPicker" value="#D6470E" title="Color de texto">
+  <button onclick="applyColor()">Aplicar</button>
+  <button onclick="fmt('removeFormat')" style="color:#666;font-size:11px;">Quitar formato</button>
 </div>
 
-<div class="month-page" id="month-julio">
-  <div class="cal-header">
-    <h1>CALENDARIO DE VISITAS</h1>
-    <h2>JULIO 2026</h2>
-  </div>
-  <table class="cal-grid">
-    <thead>
-      <tr>
-        <th>DOM</th><th>LUN</th><th>MAR</th><th>MIE</th><th>JUE</th><th>VIE</th><th>SAB</th>
-      </tr>
-    </thead>
-    <tbody id="cal-body-julio"></tbody>
-  </table>
+<div class="sheet-wrap" id="sheet">
 </div>
 
 <script>
-const months = [
-  { id: 'julio', name: 'JULIO 2026', year: 2026, month: 6 }
+const MONTHS = [
+  { id:'julio',      name:'Julio',      year:2026, month:6 },
+  { id:'agosto',     name:'Agosto',     year:2026, month:7 },
+  { id:'septiembre', name:'Septiembre', year:2026, month:8 },
+  { id:'octubre',    name:'Octubre',    year:2026, month:9 },
+  { id:'noviembre',  name:'Noviembre',  year:2026, month:10 },
+  { id:'diciembre',  name:'Diciembre',  year:2026, month:11 },
 ];
 
-function buildCalendar(cfg) {
-  const tbody = document.getElementById('cal-body-' + cfg.id);
-  if (!tbody) return;
+const DAYS = ['Domingo','Lunes','Martes','Mi\u00e9rcoles','Jueves','Viernes','S\u00e1bado'];
+
+function buildMonth(cfg) {
   const firstDay = new Date(cfg.year, cfg.month, 1).getDay();
-  const daysInMonth = new Date(cfg.year, cfg.month + 1, 0).getDate();
-  let day = 1, html = '';
+  const total = new Date(cfg.year, cfg.month+1, 0).getDate();
+  let day = 1, rows = '';
   for (let w = 0; w < 6; w++) {
-    if (day > daysInMonth) break;
-    html += '<tr>';
+    if (day > total) break;
+    rows += '<tr>';
     for (let d = 0; d < 7; d++) {
-      if ((w === 0 && d < firstDay) || day > daysInMonth) {
-        html += '<td class="empty"></td>';
+      if ((w===0 && d<firstDay) || day>total) {
+        rows += '<td class="empty"></td>';
       } else {
-        const key = cfg.id + '-' + day;
-        const isSun = d === 0;
-        const saved = localStorage.getItem(key) || '';
-        html += `<td>
-          <span class="day-num${isSun ? ' sunday' : ''}">${day}</span>
-          <div class="day-content" contenteditable="true" data-key="${key}" onblur="saveDay(this)" onfocus="setActive(this)">${saved}</div>
-        </td>`;
+        const key = cfg.id+'-'+day;
+        const isSun = d===0;
+        const saved = localStorage.getItem(key)||'';
+        rows += `<td>
+<span class="daynum${isSun?' sun':''} ">${day}</span>
+<div class="note" contenteditable="true" data-key="${key}" onblur="save(this)" onfocus="setActive(this)">${saved}</div>
+</td>`;
         day++;
       }
     }
-    html += '</tr>';
+    rows += '</tr>';
   }
-  tbody.innerHTML = html;
+  return rows;
 }
 
-months.forEach(buildCalendar);
+const sheet = document.getElementById('sheet');
+MONTHS.forEach(cfg => {
+  const sec = document.createElement('section');
+  sec.className = 'month-page';
+  sec.innerHTML = `
+<div class="banner">
+  <div class="banner-overlay"></div>
+  <div class="banner-title">
+    <span class="eyebrow">Calendario de visitas</span>
+    <h1>${cfg.name} <span class="year">2026</span></h1>
+  </div>
+</div>
+<div class="divider"></div>
+<table class="calendar">
+<thead><tr>${DAYS.map(d=>'<th>'+d+'</th>').join('')}</tr></thead>
+<tbody>${buildMonth(cfg)}</tbody>
+</table>`;
+  sheet.appendChild(sec);
+});
 
-function saveDay(el) {
-  localStorage.setItem(el.dataset.key, el.innerHTML);
-}
-
-let activeEl = null;
-function setActive(el) { activeEl = el; }
-
+function save(el) { localStorage.setItem(el.dataset.key, el.innerHTML); }
+let active = null;
+function setActive(el) { active = el; }
 function fmt(cmd) {
   document.execCommand(cmd, false, null);
-  if (activeEl) saveDay(activeEl);
+  if (active) save(active);
 }
-
 function applyColor() {
-  const color = document.getElementById('colorPicker').value;
-  document.execCommand('foreColor', false, color);
-  if (activeEl) saveDay(activeEl);
+  const c = document.getElementById('colorPicker').value;
+  document.execCommand('foreColor', false, c);
+  if (active) save(active);
 }
 </script>
 </body>

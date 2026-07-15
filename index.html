@@ -4,11 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Calendario de Visitas 2026</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: 'Roboto', sans-serif; background: #f5f0eb; }
+  body { font-family: 'Consolas', monospace; background: #f5f0eb; }
   .no-print { text-align: center; padding: 16px; background: #c0392b; }
   .no-print button {
     background: #fff; color: #c0392b; border: none;
@@ -17,133 +15,152 @@
   }
   .no-print button:hover { background: #fde8d8; }
   .save-msg { color: #ffe0b2; font-size: 13px; margin-top: 6px; min-height: 18px; }
+  .toolbar {
+    display: flex; align-items: center; justify-content: center;
+    flex-wrap: wrap; gap: 8px; padding: 10px 16px;
+    background: #fff3e0; border-bottom: 2px solid #e65100;
+  }
+  .toolbar label { font-size: 13px; font-weight: bold; color: #b71c1c; font-family: Consolas, monospace; }
+  .toolbar button {
+    padding: 5px 14px; border-radius: 5px; border: 1.5px solid #e65100;
+    background: #fff; color: #c0392b; font-size: 14px;
+    cursor: pointer; font-family: Consolas, monospace; font-weight: bold;
+  }
+  .toolbar button:hover { background: #fde8d8; }
+  .toolbar input[type=color] {
+    width: 36px; height: 30px; border: 1.5px solid #e65100;
+    border-radius: 5px; cursor: pointer; padding: 2px;
+  }
   .month-page {
-    width: 297mm; min-height: 210mm;
-    margin: 24px auto; background: #fff;
-    border-radius: 8px; box-shadow: 0 2px 12px rgba(0,0,0,0.15);
-    overflow: hidden; page-break-after: always;
+    width: 100%; max-width: 1100px; margin: 0 auto;
+    padding: 8px; page-break-after: always;
   }
-  .banner {
-    background: linear-gradient(135deg, #e65c00 0%, #f9a825 100%);
-    color: #fff; text-align: center; padding: 18px 12px 10px;
-    border-bottom: 4px solid #c0392b;
+  .cal-header {
+    background: linear-gradient(135deg, #e65100, #ff8f00);
+    color: white; text-align: center; padding: 18px 8px 10px;
+    border-radius: 6px 6px 0 0;
   }
-  .banner h1 { font-size: 24px; letter-spacing: 3px; font-weight: 700; text-shadow: 1px 1px 3px rgba(0,0,0,0.3); }
-  .banner h2 { font-size: 14px; font-weight: 300; opacity: 0.95; margin-top: 4px; }
-  .calendar { width: 100%; border-collapse: collapse; }
-  .calendar th {
-    background: #e65c00; color: #fff;
-    padding: 7px 4px; font-size: 12px; text-align: center;
-    border: 1px solid #c0392b; letter-spacing: 1px;
+  .cal-header h1 { font-size: 2em; letter-spacing: 3px; font-family: Consolas, monospace; }
+  .cal-header h2 { font-size: 1.1em; letter-spacing: 2px; margin-top: 4px; font-family: Consolas, monospace; }
+  .cal-grid { width: 100%; border-collapse: collapse; }
+  .cal-grid th {
+    background: #bf360c; color: white; text-align: center;
+    padding: 8px 0; font-size: 0.95em; font-family: Consolas, monospace;
+    border: 1px solid #e65100;
   }
-  .calendar td {
-    border: 1px solid #f5cba7; vertical-align: top;
-    width: 14.28%; min-height: 28mm; padding: 5px;
-    background: #fff;
+  .cal-grid td {
+    border: 1px solid #ffccbc; vertical-align: top;
+    width: 14.28%; height: 110px; padding: 4px 6px;
+    background: #fff8f0;
   }
-  .calendar td:hover { background: #fff8f3; }
-  .day-empty { background: #fdf3ec !important; }
-  .daynum {
-    font-weight: 700; font-size: 13px; color: #e65c00;
-    margin-bottom: 4px;
+  .cal-grid td.empty { background: #fff3e0; }
+  .day-num {
+    font-weight: bold; font-size: 1em; color: #bf360c;
+    display: block; margin-bottom: 4px; font-family: Consolas, monospace;
   }
-  .day-sunday .daynum { color: #c0392b; }
-  .day-saturday .daynum { color: #e67e22; }
-  textarea.note {
-    width: 100%; border: none; resize: none;
-    font-size: 10.5px; font-family: 'Roboto', sans-serif;
-    color: #4a2c0a; background: transparent; outline: none;
-    min-height: 62px; line-height: 1.5;
+  .day-num.sunday { color: #c0392b; }
+  .day-content {
+    min-height: 75px; width: 100%; outline: none;
+    font-family: Consolas, monospace; font-size: 12.5px;
+    color: #333; line-height: 1.5; white-space: pre-wrap; word-break: break-word;
+  }
+  .day-content:empty:before {
+    content: 'Escribe aqui...';
+    color: #bbb; pointer-events: none; display: block;
   }
   @media print {
-    .no-print { display: none; }
-    .month-page {
-      box-shadow: none; margin: 0; border-radius: 0;
-      width: 100%; page-break-after: always;
-    }
-    @page { size: A4 landscape; margin: 8mm; }
+    .no-print, .toolbar { display: none !important; }
+    body { background: white; }
+    .month-page { page-break-after: always; padding: 0; }
+    .cal-grid td { height: 100px; }
   }
 </style>
 </head>
 <body>
+
 <div class="no-print">
   <button onclick="window.print()">Imprimir / Guardar PDF</button>
-  <div class="save-msg" id="saveMsg">Los datos se guardan automaticamente en este navegador.</div>
+  <div class="save-msg">Los datos se guardan automaticamente en este navegador.</div>
 </div>
-<main id="main-content"></main>
+
+<div class="toolbar" id="toolbar">
+  <label>Formato de texto:</label>
+  <button onclick="fmt('bold')" title="Negrita"><b>N</b></button>
+  <button onclick="fmt('italic')" title="Cursiva"><i>I</i></button>
+  <button onclick="fmt('underline')" title="Subrayado"><u>S</u></button>
+  <label>Color de letra:</label>
+  <input type="color" id="colorPicker" value="#000000" title="Color de texto">
+  <button onclick="applyColor()" style="font-size:13px;">Aplicar Color</button>
+  <button onclick="fmt('removeFormat')" style="font-size:12px; color:#555;">Quitar formato</button>
+</div>
+
+<div class="month-page" id="month-julio">
+  <div class="cal-header">
+    <h1>CALENDARIO DE VISITAS</h1>
+    <h2>JULIO 2026</h2>
+  </div>
+  <table class="cal-grid">
+    <thead>
+      <tr>
+        <th>DOM</th><th>LUN</th><th>MAR</th><th>MIE</th><th>JUE</th><th>VIE</th><th>SAB</th>
+      </tr>
+    </thead>
+    <tbody id="cal-body-julio"></tbody>
+  </table>
+</div>
+
 <script>
-const MONTHS = [
-  { name: 'JULIO', year: 2026, month: 6, days: 31 },
-  { name: 'AGOSTO', year: 2026, month: 7, days: 31 },
-  { name: 'SEPTIEMBRE', year: 2026, month: 8, days: 30 },
-  { name: 'OCTUBRE', year: 2026, month: 9, days: 31 },
-  { name: 'NOVIEMBRE', year: 2026, month: 10, days: 30 },
-  { name: 'DICIEMBRE', year: 2026, month: 11, days: 31 },
+const months = [
+  { id: 'julio', name: 'JULIO 2026', year: 2026, month: 6 }
 ];
-const DAY_NAMES = ['DOM','LUN','MAR','MIE','JUE','VIE','SAB'];
-const DAY_CLASSES = ['day-sunday','','','','','','day-saturday'];
 
-function buildCalendar() {
-  const main = document.getElementById('main-content');
-  MONTHS.forEach(m => {
-    const firstDay = new Date(m.year, m.month, 1).getDay();
-    const page = document.createElement('div');
-    page.className = 'month-page';
-    page.innerHTML = `
-      <div class="banner">
-        <h1>CALENDARIO DE VISITAS</h1>
-        <h2>${m.name} ${m.year}</h2>
-      </div>
-      <table class="calendar">
-        <thead><tr>${DAY_NAMES.map(d=>`<th>${d}</th>`).join('')}</tr></thead>
-        <tbody id="tbody-${m.month}"></tbody>
-      </table>`;
-    main.appendChild(page);
-    const tbody = page.querySelector(`#tbody-${m.month}`);
-    let day = 1;
-    for (let w = 0; w < 6; w++) {
-      if (day > m.days) break;
-      const tr = document.createElement('tr');
-      for (let d = 0; d < 7; d++) {
-        const td = document.createElement('td');
-        const pos = w * 7 + d;
-        if (pos < firstDay || day > m.days) {
-          td.className = 'day-empty';
-        } else {
-          const dow = new Date(m.year, m.month, day).getDay();
-          td.className = DAY_CLASSES[dow];
-          const key = `nota-${m.year}-${m.month}-${day}`;
-          td.innerHTML = `<div class="daynum">${day}</div>`;
-          const ta = document.createElement('textarea');
-          ta.className = 'note';
-          ta.placeholder = 'Escribe aqui...';
-          ta.dataset.key = key;
-          ta.value = localStorage.getItem(key) || '';
-          ta.addEventListener('input', () => {
-            localStorage.setItem(key, ta.value);
-            showSaved();
-          });
-          td.appendChild(ta);
-          day++;
-        }
-        tr.appendChild(td);
+function buildCalendar(cfg) {
+  const tbody = document.getElementById('cal-body-' + cfg.id);
+  if (!tbody) return;
+  const firstDay = new Date(cfg.year, cfg.month, 1).getDay();
+  const daysInMonth = new Date(cfg.year, cfg.month + 1, 0).getDate();
+  let day = 1, html = '';
+  for (let w = 0; w < 6; w++) {
+    if (day > daysInMonth) break;
+    html += '<tr>';
+    for (let d = 0; d < 7; d++) {
+      if ((w === 0 && d < firstDay) || day > daysInMonth) {
+        html += '<td class="empty"></td>';
+      } else {
+        const key = cfg.id + '-' + day;
+        const isSun = d === 0;
+        const saved = localStorage.getItem(key) || '';
+        html += `<td>
+          <span class="day-num${isSun ? ' sunday' : ''}">${day}</span>
+          <div class="day-content" contenteditable="true" data-key="${key}" onblur="saveDay(this)" onfocus="setActive(this)">${saved}</div>
+        </td>`;
+        day++;
       }
-      tbody.appendChild(tr);
     }
-  });
+    html += '</tr>';
+  }
+  tbody.innerHTML = html;
 }
 
-let saveTimer;
-function showSaved() {
-  clearTimeout(saveTimer);
-  const msg = document.getElementById('saveMsg');
-  msg.textContent = 'Guardado automaticamente.';
-  saveTimer = setTimeout(() => {
-    msg.textContent = 'Los datos se guardan automaticamente en este navegador.';
-  }, 2000);
+months.forEach(buildCalendar);
+
+function saveDay(el) {
+  localStorage.setItem(el.dataset.key, el.innerHTML);
 }
 
-buildCalendar();
+let activeEl = null;
+function setActive(el) { activeEl = el; }
+
+function fmt(cmd) {
+  document.execCommand(cmd, false, null);
+  if (activeEl) saveDay(activeEl);
+}
+
+function applyColor() {
+  const color = document.getElementById('colorPicker').value;
+  document.execCommand('foreColor', false, color);
+  if (activeEl) saveDay(activeEl);
+}
 </script>
 </body>
 </html>
